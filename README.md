@@ -17,6 +17,9 @@ Note that the current site uses [skeleton.css](http://getskeleton.com). Feel fre
 ## APIs
 Use the api key and app id that sent to you to populate recipes. If for whatever reason this isn't working, you'll have to sign up for the Edamam API and use your own app id and key.
 
+Note that the test keys given to you are limited and do not allow you to filter across dish and cuisine type. Feel free to handle those items as you like (either show errors from the API properly, ignore those filters, etc).
+
+
 ### Example `curl`
 
 This example curl will use the API to search for alcohol free recipes between 591-722 calories, limiting to three results, which contain the word "chicken" in them.
