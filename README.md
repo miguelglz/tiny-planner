@@ -4,38 +4,39 @@
 
 Build a React app (using Typescript) using this template project that accomplishes the following:
 
-1. Let's you search for `Recipe`s by [diet](#diets), certain [health](#health) restrictions, [meal type](#meal_type), [dish type](#dish_type), [cuisine type](#cuisine_type), and any arbitrary `query` text that appears in the `Recipe` (i.e. `query=chicken`) using the [Edamam Recipe Search API](https://developer.edamam.com/edamam-docs-recipe-api) with the key that was provided to you.
-1. Let's you select `Recipe`s returned and add it to your next 7 day `Meal Plan`.
-1. Let's you view a final summary of your `Meal Plan` for the week, showing what to eat each meal of each day of the week, and provides you with the recipes, their instructions, details, etc. grouped by meal type (i.e. `Breakfast`, `Lunch`, `Dinner`, `Snack`).
+1. Let's you search for `Recipe`s by [diet](#diets), [dish type](#dish_type), [cuisine type](#cuisine_type), and any arbitrary `query` text that appears in the `Recipe` (i.e. `query=chicken`) using the [Edamam Recipe Search API](https://developer.edamam.com/edamam-docs-recipe-api) with the free key that you can obtain from here: [Edamam API Key](https://developer.edamam.com/edamam-recipe-api)
+1. Let's you select `Recipe`s returned and add it to your `Meal Plan`. (Just an array of recipe Ids is fine.)
+1. Let's you view a final summary of your `Meal Plan` for the week, in a list of recipe cards (simple design is fine) with recipe detail information on it so you can view a clear list of the recipes for the week. A way to delete individual recipe cards, and persist meal plans would be awesome too.
+1. Thouroughly tested and validated through React Testing Suite. Feel free to improve or replace the existing tests as well.
 
-While we'll be judging this on functionality above all else, feel free to showcase your skills and diligence -- from documentation, testing, design, architecture, and more.
+While we'll be judging this on functionality above all else, feel free to showcase your skills and diligence -- from documentation, design, architecture, and more.
 
 ### CSS
 
-Note that the current site uses [skeleton.css](http://getskeleton.com). Feel free to replace this if you like with anything you're more comfortable with.
+Note that the current site uses [skeleton.css](http://getskeleton.com) for some base styling to use, but we also use Sass modules that you can do custom styling with. Feel free to replace this if you like with anything you're more comfortable with.
 
 ## APIs
-Use the api key and app id that sent to you to populate recipes. If for whatever reason this isn't working, you'll have to sign up for the Edamam API and use your own app id and key.
+
+Use the api key and app id from Edamamn to populate recipes. If for whatever reason this isn't working, contact us and we'll see about getting you a key and app id.
 
 Note that the test keys given to you are limited and do not allow you to filter across dish and cuisine type. Feel free to handle those items as you like (either show errors from the API properly, ignore those filters, etc).
-
 
 ### Example `curl`
 
 This example curl will use the API to search for alcohol free recipes between 591-722 calories, limiting to three results, which contain the word "chicken" in them.
 
-~~~shell
+```shell
 curl "https://api.edamam.com/search?q=chicken&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&from=0&to=3&calories=591-722&health=alcohol-free"
-~~~
+```
 
 ## Domain Model
 
 Feel free to use this domain model as a starting point for the application.
 
-### `Recipe` 
+### `Recipe`
 
-~~~javascript
-{ 
+```javascript
+{
     label: "recipe title",
     image: "image url",
     source: "source site identifier",
@@ -45,92 +46,137 @@ Feel free to use this domain model as a starting point for the application.
     totalWeight: 25.2 //float, total weight, g
     ingredients: Ingredient[] //Ingredient[], array of Ingredient types
     totalNutrients: NutrientInfo[],//NutrientInfo[], nutrients for entire recipe
-    totalDaily: NutrientInfo[], //NutrientInfo[], % daily value for entire recipe 
+    totalDaily: NutrientInfo[], //NutrientInfo[], % daily value for entire recipe
     dietLabels: enum[], //diet labels
-    healthLabels: enum[], //health labels 
+    healthLabels: enum[], //health labels
 }
-~~~
+```
 
 ### `Ingredient`
 
-~~~javascript
-{ 
+```javascript
+{
     foodId: "food identifier string",
     quantity: 2.5, //float, quantity of specified measure
     measure: Measure, //Measure
     weight: 2.5, //float, total weight, g
     food: Food //Food
 }
-~~~
-
+```
 
 ### `NutrientInfo`
 
-~~~javascript
-{ 
+```javascript
+{
     uri: "string identifier",
     label: "display label",
     quantity: 2.5, //float quantity of specified units
     unit: "unit"
 }
-~~~
+```
 
 ### `Measure`
 
-~~~javascript
-{ 
+```javascript
+{
     uri: "string identifier",
     label: "common name",
 }
-~~~
+```
 
 ### `Food`
 
-~~~javascript
-{ 
+```javascript
+{
     foodId: "string food identifier",
     label: "common name",
 }
-~~~
+```
 
+### <a name="diets"></a> Diet Labels
 
-### <a name="diets"></a> Diet Labels 
+```javascript
+['balanced', 'high-protein', 'high-fiber', 'low-fat', 'low-carb', 'low-sodium'];
+```
 
-~~~javascript
-[ "balanced", "high-protein", "high-fiber", "low-fat", "low-carb", "low-sodium" ]
-~~~
+### <a name="health"></a> Health Labels (Not avail on Free API)
 
+```javascript
+[
+    'vegan',
+    'vegetarian',
+    'paleo',
+    'dairy-free',
+    'gluten-free',
+    'wheat-free',
+    'fat-free',
+    'low-sugar',
+    'egg-free',
+    'peanut-free',
+    'tree-nut-free',
+    'soy-free',
+    'fish-free',
+    'shellfish-free',
+];
+```
 
+### <a name="meal_type"></a> Meal Type (Not avail on Free API)
 
-### <a name="health"></a> Health Labels 
-
-~~~javascript
-[ "vegan", "vegetarian", "paleo", "dairy-free", "gluten-free", "wheat-free", "fat-free", "low-sugar", "egg-free", "peanut-free", "tree-nut-free", "soy-free", "fish-free", "shellfish-free" ]
-~~~
-
-### <a name="meal_type"></a> Meal Type
-
-~~~javascript
-["Breakfast", "Lunch", "Dinner", "Snack"]
-~~~
+```javascript
+['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+```
 
 ### <a name="dish_type"></a> Dish Type
 
-~~~javascript
-["Bread",
-"Cereals", "Condiments and sauces", "Drinks", "Desserts", "Main course", "Pancake", "Preps", "Preserve", "Salad", "Sandwiches", "Side dish", "Soup", "Starter", "Sweets"]
-~~~
+```javascript
+[
+    'Bread',
+    'Cereals',
+    'Condiments and sauces',
+    'Drinks',
+    'Desserts',
+    'Main course',
+    'Pancake',
+    'Preps',
+    'Preserve',
+    'Salad',
+    'Sandwiches',
+    'Side dish',
+    'Soup',
+    'Starter',
+    'Sweets',
+];
+```
 
 ### <a name="Cuisine Type"></a> Cuisine Type
 
-~~~javascript
-["American", "Asian", "British", "Caribbean", "Central Europe", "Chinese", "Eastern Europe", "French", "Indian", "Italian", "Japanese", "Kosher", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "South American", "South East Asian"]
-~~~
-
+```javascript
+[
+    'American',
+    'Asian',
+    'British',
+    'Caribbean',
+    'Central Europe',
+    'Chinese',
+    'Eastern Europe',
+    'French',
+    'Indian',
+    'Italian',
+    'Japanese',
+    'Kosher',
+    'Mediterranean',
+    'Mexican',
+    'Middle Eastern',
+    'Nordic',
+    'South American',
+    'South East Asian',
+];
+```
 
 ### <a name="dish_type"></a> Dish Type
 
 ### Nutrients Codes and units
+
 <table>
 	<tbody><tr>
 		<th><span>NTR</span> Code </th>
