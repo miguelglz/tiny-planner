@@ -1,21 +1,17 @@
 import React from 'react';
-import RecipeSearchForm from './RecipeSearchForm';
-import './normalize.css';
-import './skeleton.css';
+import RecipeSearchForm from './components/RecipeSearchForm/RecipeSearchForm';
 
 function App() {
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="u-full-width">
-          <header className="App-header">
-            Surely Meal Planner
-          </header>
+    return (
+        <div className="container">
+            <div className="row">
+                <div className="u-full-width">
+                    <header className="App-header">Surely Meal Planner</header>
+                </div>
+            </div>
+            <RecipeSearchForm />
         </div>
-      </div>
-      <RecipeSearchForm />
-    </div>
-  );
+    );
 }
 
 export default App;
