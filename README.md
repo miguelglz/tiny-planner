@@ -11,6 +11,8 @@ Build a React app (using Typescript) using this template project that accomplish
 
 While we'll be judging this on functionality above all else, feel free to showcase your skills and diligence -- from documentation, design, architecture, and more.
 
+Note that the Edamam API is limited and you cannot search by diet or cuisine type with the free API key.
+
 ### CSS
 
 Note that the current site uses [skeleton.css](http://getskeleton.com) for some base styling to use, but we also use Sass modules that you can do custom styling with. Feel free to replace this if you like with anything you're more comfortable with.
