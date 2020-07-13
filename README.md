@@ -4,7 +4,7 @@
 
 Build a React app (using Typescript) using this template project that accomplishes the following:
 
-1. Let's you search for `Recipe`s by [diet](#diets), [dish type](#dish_type), [cuisine type](#cuisine_type), and any arbitrary `query` text that appears in the `Recipe` (i.e. `query=chicken`) using the [Edamam Recipe Search API](https://developer.edamam.com/edamam-docs-recipe-api) with the free key that you can obtain from here: [Edamam API Key](https://developer.edamam.com/edamam-recipe-api)
+1. Let's you search for `Recipe`s by [diet](#diets), [health type](#health_type), and any arbitrary `query` text that appears in the `Recipe` (i.e. `query=chicken`) using the [Edamam Recipe Search API](https://developer.edamam.com/edamam-docs-recipe-api) with the free key that you can obtain from here: [Edamam API Key](https://developer.edamam.com/edamam-recipe-api)
 1. Let's you select `Recipe`s returned and add it to your `Meal Plan`. (Just an array of recipe Ids is fine.)
 1. Let's you view a final summary of your `Meal Plan` for the week, in a list of recipe cards (simple design is fine) with recipe detail information on it so you can view a clear list of the recipes for the week. A way to delete individual recipe cards, and persist meal plans would be awesome too.
 1. Thouroughly tested and validated through React Testing Suite. Feel free to improve or replace the existing tests as well.
@@ -23,10 +23,10 @@ Note that the test keys given to you are limited and do not allow you to filter 
 
 ### Example `curl`
 
-This example curl will use the API to search for alcohol free recipes between 591-722 calories, limiting to three results, which contain the word "chicken" in them.
+This example curl will use the API to search for alcohol free recipes that are low carb, limiting to ten results, which contain the word "chicken" in them.
 
 ```shell
-curl "https://api.edamam.com/search?q=chicken&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&from=0&to=3&calories=591-722&health=alcohol-free"
+curl "https://api.edamam.com/search?q=chicken&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&from=0&to=10&health=alcohol-free&diet=low-carb"
 ```
 
 ## Domain Model
@@ -96,28 +96,13 @@ Feel free to use this domain model as a starting point for the application.
 ### <a name="diets"></a> Diet Labels
 
 ```javascript
-['balanced', 'high-protein', 'high-fiber', 'low-fat', 'low-carb', 'low-sodium'];
+['balanced', 'high-protein', 'low-fat', 'low-carb', 'low-sodium'];
 ```
 
-### <a name="health"></a> Health Labels (Not avail on Free API)
+### <a name="health"></a> Health Labels
 
 ```javascript
-[
-    'vegan',
-    'vegetarian',
-    'paleo',
-    'dairy-free',
-    'gluten-free',
-    'wheat-free',
-    'fat-free',
-    'low-sugar',
-    'egg-free',
-    'peanut-free',
-    'tree-nut-free',
-    'soy-free',
-    'fish-free',
-    'shellfish-free',
-];
+['vegan', 'vegetarian', 'peanut-free', 'tree-nut-free', 'alcohol-free', 'sugar-concious'];
 ```
 
 ### <a name="meal_type"></a> Meal Type (Not avail on Free API)
@@ -126,7 +111,7 @@ Feel free to use this domain model as a starting point for the application.
 ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 ```
 
-### <a name="dish_type"></a> Dish Type
+### <a name="dish_type"></a> Dish Type (Not avail on Free API)
 
 ```javascript
 [
@@ -148,7 +133,7 @@ Feel free to use this domain model as a starting point for the application.
 ];
 ```
 
-### <a name="Cuisine Type"></a> Cuisine Type
+### <a name="Cuisine Type"></a> Cuisine Type (Not avail on Free API)
 
 ```javascript
 [

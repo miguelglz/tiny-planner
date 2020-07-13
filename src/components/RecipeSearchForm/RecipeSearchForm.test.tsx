@@ -15,16 +15,9 @@ describe('RecipeSearchForm Component', () => {
         expect(select).toHaveAttribute('multiple');
     });
 
-    it('should render cuisine multi select', () => {
+    it('should render health multi select', () => {
         const { getByLabelText } = render(<RecipeSearchForm />);
-        const select = getByLabelText('Cuisine Type');
-        expect(select).toBeInTheDocument();
-        expect(select).toHaveAttribute('multiple');
-    });
-
-    it('should render dish type multi select', () => {
-        const { getByLabelText } = render(<RecipeSearchForm />);
-        const select = getByLabelText('Dish Type');
+        const select = getByLabelText('Health Type');
         expect(select).toBeInTheDocument();
         expect(select).toHaveAttribute('multiple');
     });
