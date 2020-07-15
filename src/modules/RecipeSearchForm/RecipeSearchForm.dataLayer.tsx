@@ -12,7 +12,18 @@ const RecipeSearchFormDataLayer: FC = () => {
   ): Promise<void> {
     try {
       const results: any = await api.searchRecipes(queryParams);
-      console.log('results', results)
+      const recipeList = results.map((recipe: any) => {
+        const recipeId: string = recipe.uri.replace(
+          'http://www.edamam.com/ontologies/edamam.owl#recipe_',
+          ''
+        );
+        recipe.id = recipeId;
+        return {
+          label: recipe.label,
+          value: recipeId,
+        };
+      });
+      setRecipes(recipeList);
     } catch (e) {
       const errorMessage =
         e.response && e.response.data ? e.response.data : e.message;
@@ -21,11 +32,7 @@ const RecipeSearchFormDataLayer: FC = () => {
     }
   }
 
-  return (
-    <RecipeSearchForm
-      onSearch={handleOnSearch}
-    />
-  );
+  return <RecipeSearchForm onSearch={handleOnSearch} recipes={recipes} />;
 };
 
 export default RecipeSearchFormDataLayer;

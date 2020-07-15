@@ -1,5 +1,5 @@
 import React, { SFC } from 'react';
-import { Input, Row, Col, Button, Form } from 'antd';
+import { Input, Row, Col, Button, Form, Checkbox } from 'antd';
 import { isNil } from 'lodash';
 import StyledSelect from '../../components/StyledSelect';
 import { searchOptions } from '../../helpers/constants';
@@ -7,10 +7,12 @@ import s from './RecipeSearchForm.module.scss';
 
 export interface RecipeSearchFormProps {
   onSearch: (queryParams: any) => Promise<void>;
+  recipes?: any;
 }
 
 const RecipeSearchForm: SFC<RecipeSearchFormProps> = ({
   onSearch,
+  recipes,
 }) => {
   const { Search } = Input;
   const submitValues = (values: any) => {
@@ -83,6 +85,26 @@ const RecipeSearchForm: SFC<RecipeSearchFormProps> = ({
           </Col>
         </Row>
       </Form>
+      {!isNil(recipes) && (
+        <>
+          <Row gutter={[0, 16]}>
+            <Col span={24} className={`u-full-width ${s.boldStyle}`}>
+              {recipes.length > 0
+                ? 'Select meals for your plan.'
+                : 'No meals found.'}
+            </Col>
+          </Row>
+          {recipes.length > 0 && (
+            <Row gutter={[0, 16]}>
+              <Col span={24}>
+                <Checkbox.Group
+                  options={recipes}
+                />
+              </Col>
+            </Row>
+          )}
+        </>
+      )}
     </>
   );
 };
