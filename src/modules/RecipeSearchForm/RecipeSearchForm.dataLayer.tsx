@@ -6,6 +6,8 @@ import api from '../../helpers/api/wrapper';
 
 const RecipeSearchFormDataLayer: FC = () => {
   const [recipes, setRecipes] = useState<any>(null);
+  const [recipesData, setRecipesData] = useState<any>([]);
+  const [selectedRecipes, setSelectedRecipes] = useState<Array<object>>([]);
 
   async function handleOnSearch(
     queryParams: SearchRecipesQueryParams
@@ -23,6 +25,7 @@ const RecipeSearchFormDataLayer: FC = () => {
           value: recipeId,
         };
       });
+      setRecipesData(results);
       setRecipes(recipeList);
     } catch (e) {
       const errorMessage =
@@ -32,7 +35,20 @@ const RecipeSearchFormDataLayer: FC = () => {
     }
   }
 
-  return <RecipeSearchForm onSearch={handleOnSearch} recipes={recipes} />;
+  function hanldeCheckboxChange(selectedRecipeIds: Array<string>): void {
+    setSelectedRecipes(
+      recipes.filter((recipe: any) => selectedRecipeIds.includes(recipe.id))
+    );
+    console.log('selectedRecipeIds', selectedRecipeIds)
+  }
+
+  return (
+    <RecipeSearchForm
+      onSearch={handleOnSearch}
+      recipes={recipes}
+      checkBoxChange={hanldeCheckboxChange}
+    />
+  );
 };
 
 export default RecipeSearchFormDataLayer;

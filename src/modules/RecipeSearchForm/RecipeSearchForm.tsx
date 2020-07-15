@@ -8,11 +8,13 @@ import s from './RecipeSearchForm.module.scss';
 export interface RecipeSearchFormProps {
   onSearch: (queryParams: any) => Promise<void>;
   recipes?: any;
+  checkBoxChange: (selectedRecipeIds: any) => void;
 }
 
 const RecipeSearchForm: SFC<RecipeSearchFormProps> = ({
   onSearch,
   recipes,
+  checkBoxChange,
 }) => {
   const { Search } = Input;
   const submitValues = (values: any) => {
@@ -99,6 +101,7 @@ const RecipeSearchForm: SFC<RecipeSearchFormProps> = ({
               <Col span={24}>
                 <Checkbox.Group
                   options={recipes}
+                  onChange={checkBoxChange}
                 />
               </Col>
             </Row>
