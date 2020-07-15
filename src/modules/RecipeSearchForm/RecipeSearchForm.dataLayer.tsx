@@ -2,6 +2,10 @@ import React, { FC, useState } from 'react';
 import { message } from 'antd';
 import RecipeSearchForm from './RecipeSearchForm';
 import { SearchRecipesQueryParams } from '../../helpers/api/interfaces';
+import {
+  formatResults,
+  filterSelectedRecipies,
+} from './RecipeSearchForm.utils';
 import api from '../../helpers/api/wrapper';
 
 const RecipeSearchFormDataLayer: FC = () => {
@@ -13,18 +17,10 @@ const RecipeSearchFormDataLayer: FC = () => {
     queryParams: SearchRecipesQueryParams
   ): Promise<void> {
     try {
+      setSelectedRecipes([]);
+      setRecipes(null);
       const results: any = await api.searchRecipes(queryParams);
-      const recipeList = results.map((recipe: any) => {
-        const recipeId: string = recipe.uri.replace(
-          'http://www.edamam.com/ontologies/edamam.owl#recipe_',
-          ''
-        );
-        recipe.id = recipeId;
-        return {
-          label: recipe.label,
-          value: recipeId,
-        };
-      });
+      const recipeList = formatResults(results);
       setRecipesData(results);
       setRecipes(recipeList);
     } catch (e) {
@@ -36,10 +32,11 @@ const RecipeSearchFormDataLayer: FC = () => {
   }
 
   function hanldeCheckboxChange(selectedRecipeIds: Array<string>): void {
-    setSelectedRecipes(
-      recipes.filter((recipe: any) => selectedRecipeIds.includes(recipe.id))
+    const filteredRecipes = filterSelectedRecipies(
+      recipesData,
+      selectedRecipeIds
     );
-    console.log('selectedRecipeIds', selectedRecipeIds)
+    setSelectedRecipes(filteredRecipes);
   }
 
   return (
@@ -47,6 +44,7 @@ const RecipeSearchFormDataLayer: FC = () => {
       onSearch={handleOnSearch}
       recipes={recipes}
       checkBoxChange={hanldeCheckboxChange}
+      selectedRecipes={selectedRecipes}
     />
   );
 };
