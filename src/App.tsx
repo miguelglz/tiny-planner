@@ -1,17 +1,22 @@
 import React from 'react';
-import RecipeSearchForm from './components/RecipeSearchForm/RecipeSearchForm';
+import { Layout } from 'antd';
+import './App.css';
+import RecipeSearchForm from './modules/RecipeSearchForm/RecipeSearchForm';
 
 function App() {
-    return (
-        <div className="container">
-            <div className="row">
-                <div className="u-full-width">
-                    <header className="App-header">Surely Meal Planner</header>
-                </div>
-            </div>
-            <RecipeSearchForm />
-        </div>
-    );
+  const { Header, Content, Footer } = Layout;
+
+  return (
+    <Layout className="layout">
+      <Header>
+        <span className="title">Surely Meal Planner</span>
+      </Header>
+      <Content style={{ padding: '0 50px' }}>
+        <RecipeSearchForm />
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Surely ©2020</Footer>
+    </Layout>
+  );
 }
 
 export default App;

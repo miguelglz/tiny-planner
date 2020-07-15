@@ -1,0 +1,17 @@
+body {
+  background: #f0f2f5;
+}
+
+.ant-layout-content {
+  background: #fff;
+  padding: 24px;
+  width: 969px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.ant-layout-header .title {
+  height: 31px;
+  color: #fff;
+  margin: 16px 24px 16px 0;
+}
