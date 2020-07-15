@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import './App.css';
-import RecipeSearchForm from './modules/RecipeSearchForm/RecipeSearchForm';
+import RecipeSearchForm from './modules/RecipeSearchForm';
 
 function App() {
   const { Header, Content, Footer } = Layout;

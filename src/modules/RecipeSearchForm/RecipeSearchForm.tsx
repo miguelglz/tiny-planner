@@ -1,15 +1,28 @@
 import React, { SFC } from 'react';
 import { Input, Row, Col, Button, Form } from 'antd';
+import { isNil } from 'lodash';
 import StyledSelect from '../../components/StyledSelect';
 import { searchOptions } from '../../helpers/constants';
 import s from './RecipeSearchForm.module.scss';
 
-const RecipeSearchForm = () => {
-  {
-    const { Search } = Input;
+export interface RecipeSearchFormProps {
+  onSearch: (queryParams: any) => Promise<void>;
+}
 
-    return (
-      <Form>
+const RecipeSearchForm: SFC<RecipeSearchFormProps> = ({
+  onSearch,
+}) => {
+  const { Search } = Input;
+  const submitValues = (values: any) => {
+    Object.keys(values).forEach((key) => {
+      if (isNil(values[key])) delete values[key];
+    });
+    onSearch(values);
+  };
+
+  return (
+    <>
+      <Form onFinish={submitValues} data-testid="search-form" className={s.formStyle}>
         <Row gutter={[0, 16]}>
           <Col span={24} className={`u-full-width ${s.boldStyle}`}>
             Search Recipes
@@ -70,8 +83,8 @@ const RecipeSearchForm = () => {
           </Col>
         </Row>
       </Form>
-    );
-  }
+    </>
+  );
 };
 
 export default RecipeSearchForm;
